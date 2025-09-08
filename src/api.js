@@ -11,7 +11,7 @@ export const getWeatherData = async (location) => {
     const processedResult = processWeatherData(result);
     return processedResult;
   } catch (error) {
-    return error;
+    throw new Error(error.message);
   }
 };
 
