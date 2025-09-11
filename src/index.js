@@ -1,4 +1,5 @@
 import "normalize.css";
+import "./style.css";
 import { getWeatherData } from "./api";
 
 const elements = {
