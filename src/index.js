@@ -16,24 +16,28 @@ const clearInfoWrapper = () => {
   }
 };
 
+const showLocationWeather = (location) => {
+  getWeatherData(location)
+    .then((result) => {
+      clearInfoWrapper();
+      for (const info in result) {
+        const li = document.createElement("li");
+        li.textContent = result[info];
+        elements.infoWrapper.appendChild(li);
+      }
+    })
+    .catch((error) => {
+      clearInfoWrapper();
+      console.log(error);
+      const li = document.createElement("li");
+      li.textContent = error.message;
+      elements.infoWrapper.appendChild(li);
+    });
+};
+
 elements.searchButton.addEventListener("click", () => {
   const value = elements.locationInput.value;
   if (value) {
-    getWeatherData(value)
-      .then((result) => {
-        clearInfoWrapper();
-        for (const info in result) {
-          const li = document.createElement("li");
-          li.textContent = result[info];
-          elements.infoWrapper.appendChild(li);
-        }
-      })
-      .catch((error) => {
-        clearInfoWrapper();
-        console.log(error);
-        const li = document.createElement("li");
-        li.textContent = error.message;
-        elements.infoWrapper.appendChild(li);
-      });
+    showLocationWeather(value);
   }
 });
