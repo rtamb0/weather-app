@@ -5,7 +5,11 @@ import { getWeatherData } from "./api";
 const elements = {
   locationInput: document.querySelector("#locationInput"),
   searchButton: document.querySelector("#searchButton"),
-  infoWrapper: document.querySelector("#displayInfo"),
+  locationName: document.querySelector("#locationName"),
+  currentWeather: document.querySelector("#currentWeather"),
+  currentTemp: document.querySelector("#currentTemp"),
+  feelsLike: document.querySelector("#feelsLike"),
+  forecastWrapper: document.querySelector("#forecastWrapper"),
 };
 
 const clearInfoWrapper = () => {
@@ -17,22 +21,20 @@ const clearInfoWrapper = () => {
   }
 };
 
+const appendCurrentWeatherInfo = (info) => {
+  elements.locationName.textContent = info.location;
+  elements.currentWeather.textContent = info.currentWeather.conditions;
+  elements.currentTemp.textContent = info.currentWeather.temp;
+  elements.feelsLike.textContent = info.currentWeather.feelslike;
+};
+
 const showLocationWeather = (location) => {
   getWeatherData(location)
     .then((result) => {
-      clearInfoWrapper();
-      for (const info in result) {
-        const li = document.createElement("li");
-        li.textContent = result[info];
-        elements.infoWrapper.appendChild(li);
-      }
+      appendCurrentWeatherInfo(result);
     })
     .catch((error) => {
-      clearInfoWrapper();
       console.log(error);
-      const li = document.createElement("li");
-      li.textContent = error.message;
-      elements.infoWrapper.appendChild(li);
     });
 };
 
